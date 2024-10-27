@@ -1,24 +1,32 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-require('dotenv').config();  // Cargar las variables de entorno
+require('dotenv').config();
 
 const app = express();
-const port = process.env.PORT || 5000;  // Vercel manejará el puerto automáticamente
+const port = process.env.PORT || 5000;
 
-// Middleware para habilitar CORS
-app.use(cors());
+// Configuración de CORS para permitir cualquier origen temporalmente
+const corsOptions = {
+  origin: process.env.NODE_ENV === 'production' 
+    ? ['https://mi-api.vercel.app', 'URL_DEL_FRONTEND'] 
+    : '*',
+  methods: 'GET,POST,PUT,DELETE,OPTIONS',
+  allowedHeaders: 'Content-Type,Authorization',
+};
+app.use(cors(corsOptions));
 
-// Middleware para interpretar JSON en las solicitudes
+
+
 app.use(express.json());
 
-// Conectar a MongoDB Atlas usando la variable de entorno
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
+mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('Conectado a MongoDB'))
   .catch((err) => console.error('Error al conectar a MongoDB:', err));
+
+// Rutas y modelos (sin cambios en el código)
+
+
 
 /**
  * Modelos de Mongoose
