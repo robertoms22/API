@@ -8,13 +8,15 @@ const port = process.env.PORT || 5000;
 
 // Configuración de CORS para permitir cualquier origen temporalmente
 const corsOptions = {
-  origin: process.env.NODE_ENV === 'production' 
-    ? ['https://mi-api.vercel.app', 'URL_DEL_FRONTEND'] 
+  origin: process.env.NODE_ENV === 'production'
+    ? ['https://react-beta-weld.vercel.app'] // Reemplaza con la URL de tu frontend en Vercel
     : '*',
   methods: 'GET,POST,PUT,DELETE,OPTIONS',
   allowedHeaders: 'Content-Type,Authorization',
 };
+
 app.use(cors(corsOptions));
+
 
 
 
